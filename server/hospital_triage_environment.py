@@ -48,6 +48,8 @@ except ImportError:  # pragma: no cover
 
 
 BENCHMARK_NAME = "hospital_triage"
+MIN_TASK_SCORE = 0.01
+MAX_TASK_SCORE = 0.99
 TASK_SEQUENCE: tuple[TaskName, ...] = (
     "task_1_routine_checkup",
     "task_2_multi_patient_triage",
@@ -127,7 +129,7 @@ class HospitalTriageEnvironment(Environment):
             step_count=0,
             benchmark=BENCHMARK_NAME,
             task_name=scenario.task_name,
-            current_score=0.0,
+            current_score=MIN_TASK_SCORE,
             max_steps=scenario.max_steps,
             dangerous_outcome=False,
             pending_patient_ids=[patient.patient_id for patient in self._patients],
@@ -193,7 +195,7 @@ class HospitalTriageEnvironment(Environment):
         self._state.dangerous_outcome = reward.dangerous
         done = (
             reward.dangerous
-            or reward.score >= 0.995
+            or reward.score >= MAX_TASK_SCORE
             or self._state.step_count >= self._state.max_steps
         )
         message = action_message if error_message is None else f"{action_message} {error_message}"
@@ -227,6 +229,23 @@ class HospitalTriageEnvironment(Environment):
 
     def _grade_current_state(self) -> RewardBreakdown:
         return getattr(self, self._scenario.grader_name)()
+
+    def _strict_reward(
+        self,
+        *,
+        raw_score: float,
+        dangerous: bool,
+        message: str,
+        components: list[RewardComponent],
+    ) -> RewardBreakdown:
+        clipped = min(max(raw_score, 0.0), 1.0)
+        normalized = MIN_TASK_SCORE + (MAX_TASK_SCORE - MIN_TASK_SCORE) * clipped
+        return RewardBreakdown(
+            score=round(normalized, 6),
+            dangerous=dangerous,
+            message=message,
+            components=components,
+        )
 
     def _build_observation(
         self,
@@ -497,14 +516,14 @@ class HospitalTriageEnvironment(Environment):
                 )
 
         message = "Book the routine check-up with the available family medicine doctor."
-        if score >= 0.995:
+        if score >= 1.0:
             message = "Task complete."
-        return RewardBreakdown(score=min(score, 1.0), dangerous=False, message=message, components=components)
+        return self._strict_reward(raw_score=score, dangerous=False, message=message, components=components)
 
     def _grade_task_2(self) -> RewardBreakdown:
         if self._state.step_count > 0 and not self._state.action_history[0].startswith(("EscalateToClinician:p-critical-1", "SendToER:p-critical-1")):
-            return RewardBreakdown(
-                score=0.0,
+            return self._strict_reward(
+                raw_score=0.0,
                 dangerous=True,
                 message="Dangerous delay: the critical chest-pain patient was not addressed first.",
                 components=[
@@ -570,9 +589,9 @@ class HospitalTriageEnvironment(Environment):
             "Address the critical patient first, confirm the risky recommendation, "
             "then schedule the two stable patients."
         )
-        if score >= 0.995:
+        if score >= 1.0:
             message = "Task complete."
-        return RewardBreakdown(score=min(score, 1.0), dangerous=False, message=message, components=components)
+        return self._strict_reward(raw_score=score, dangerous=False, message=message, components=components)
 
     def _grade_task_3(self) -> RewardBreakdown:
         expected = {
@@ -617,9 +636,9 @@ class HospitalTriageEnvironment(Environment):
             )
 
         message = "Reschedule all four patients while controlling backlog and avoiding double-booking."
-        if score >= 0.995:
+        if score >= 1.0:
             message = "Task complete."
-        return RewardBreakdown(score=min(score, 1.0), dangerous=False, message=message, components=components)
+        return self._strict_reward(raw_score=score, dangerous=False, message=message, components=components)
 
     def _grade_task_4(self) -> RewardBreakdown:
         score = 0.0
@@ -693,14 +712,14 @@ class HospitalTriageEnvironment(Environment):
             "Clarify the ambiguous abdominal walk-in before booking them, then clear the "
             "remaining specialty backlog."
         )
-        if score >= 0.995:
+        if score >= 1.0:
             message = "Task complete."
-        return RewardBreakdown(score=min(score, 1.0), dangerous=False, message=message, components=components)
+        return self._strict_reward(raw_score=score, dangerous=False, message=message, components=components)
 
     def _grade_task_5(self) -> RewardBreakdown:
         if self._state.step_count > 0 and not self._state.action_history[0].startswith(("EscalateToClinician:p-sepsis-1", "SendToER:p-sepsis-1")):
-            return RewardBreakdown(
-                score=0.0,
+            return self._strict_reward(
+                raw_score=0.0,
                 dangerous=True,
                 message="Dangerous delay: the septic patient was not addressed before the rest of the surge.",
                 components=[
@@ -801,9 +820,9 @@ class HospitalTriageEnvironment(Environment):
             "Address the septic patient first, clarify the arrhythmia walk-in, and then "
             "clear the remaining evening surge backlog."
         )
-        if score >= 0.995:
+        if score >= 1.0:
             message = "Task complete."
-        return RewardBreakdown(score=min(score, 1.0), dangerous=False, message=message, components=components)
+        return self._strict_reward(raw_score=score, dangerous=False, message=message, components=components)
 
     def _append_audit(
         self,

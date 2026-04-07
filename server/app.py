@@ -50,7 +50,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
     "task_1_routine_checkup": [
         {
             "label": "Step 1",
-            "expected_reward": "1.00",
+            "expected_reward": "0.99",
             "action": json.dumps(
                 {
                     "command": "BookAppointment",
@@ -66,7 +66,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
     "task_2_multi_patient_triage": [
         {
             "label": "Step 1",
-            "expected_reward": "0.20",
+            "expected_reward": "0.21",
             "action": json.dumps(
                 {
                     "command": "EscalateToClinician",
@@ -89,7 +89,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
         },
         {
             "label": "Step 3",
-            "expected_reward": "0.80",
+            "expected_reward": "0.79",
             "action": json.dumps(
                 {
                     "command": "BookAppointment",
@@ -103,7 +103,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
         },
         {
             "label": "Step 4",
-            "expected_reward": "1.00",
+            "expected_reward": "0.99",
             "action": json.dumps(
                 {
                     "command": "BookAppointment",
@@ -119,7 +119,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
     "task_3_specialty_reschedule": [
         {
             "label": "Step 1",
-            "expected_reward": "0.20",
+            "expected_reward": "0.21",
             "action": json.dumps(
                 {
                     "command": "BookAppointment",
@@ -161,7 +161,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
         },
         {
             "label": "Step 4",
-            "expected_reward": "1.00",
+            "expected_reward": "0.99",
             "action": json.dumps(
                 {
                     "command": "BookAppointment",
@@ -177,7 +177,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
     "task_4_ambiguous_walk_in": [
         {
             "label": "Step 1",
-            "expected_reward": "0.20",
+            "expected_reward": "0.21",
             "action": json.dumps(
                 {
                     "command": "RequestMoreInfo",
@@ -217,7 +217,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
         },
         {
             "label": "Step 4",
-            "expected_reward": "1.00",
+            "expected_reward": "0.99",
             "action": json.dumps(
                 {
                     "command": "BookAppointment",
@@ -233,7 +233,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
     "task_5_evening_surge_coordination": [
         {
             "label": "Step 1",
-            "expected_reward": "0.15",
+            "expected_reward": "0.16",
             "action": json.dumps(
                 {
                     "command": "EscalateToClinician",
@@ -268,7 +268,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
         },
         {
             "label": "Step 4",
-            "expected_reward": "0.75",
+            "expected_reward": "0.74",
             "action": json.dumps(
                 {
                     "command": "BookAppointment",
@@ -282,7 +282,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
         },
         {
             "label": "Step 5",
-            "expected_reward": "0.90",
+            "expected_reward": "0.89",
             "action": json.dumps(
                 {
                     "command": "BookAppointment",
@@ -296,7 +296,7 @@ TASK_DEMO_ACTIONS: dict[str, list[dict[str, str]]] = {
         },
         {
             "label": "Step 6",
-            "expected_reward": "1.00",
+            "expected_reward": "0.99",
             "action": json.dumps(
                 {
                     "command": "BookAppointment",
@@ -333,7 +333,7 @@ def _format_demo_steps(task_name: str | None) -> str:
     if not demo_steps:
         return "No demo steps are configured for this task yet."
 
-    reward_path = " -> ".join(["0.00"] + [step["expected_reward"] for step in demo_steps])
+    reward_path = " -> ".join(["0.01"] + [step["expected_reward"] for step in demo_steps])
     blocks = [
         "### Demo Steps",
         "",

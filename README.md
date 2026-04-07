@@ -15,7 +15,7 @@ tags:
 
 # Hospital Triage and Scheduling System
 
-This OpenEnv benchmark simulates a realistic outpatient triage desk where an agent must make safe scheduling decisions under staffing and room constraints. The environment is fully deterministic, exposes typed Pydantic action and observation models, and scores agent behavior with dense trajectory rewards between `0.0` and `1.0`.
+This OpenEnv benchmark simulates a realistic outpatient triage desk where an agent must make safe scheduling decisions under staffing and room constraints. The environment is fully deterministic, exposes typed Pydantic action and observation models, and scores agent behavior with dense trajectory rewards kept strictly inside `(0.0, 1.0)`.
 
 ## Real-World Motivation
 
@@ -84,7 +84,7 @@ HospitalTriageAction(
 
 ### Reward Model
 
-Rewards are deterministic and always kept within `[0.0, 1.0]`.
+Rewards are deterministic and always kept strictly within `(0.0, 1.0)`.
 
 Each task exposes partial credit throughout the trajectory:
 - Task 1 rewards correct booking plus wait-time relief and decision logging.
@@ -94,8 +94,8 @@ Each task exposes partial credit throughout the trajectory:
 - Task 5 rewards handling a septic patient first, preserving ER capacity, and coordinating an evening surge safely.
 
 Dangerous behavior is explicitly penalized:
-- In Task 2, any first action that ignores the critical chest-pain patient ends the episode with `0.0`.
-- In Task 5, any first action that ignores the septic patient ends the episode with `0.0`.
+- In Task 2, any first action that ignores the critical chest-pain patient ends the episode at the minimum score of `0.01`.
+- In Task 5, any first action that ignores the septic patient ends the episode at the minimum score of `0.01`.
 
 ## Tasks
 
@@ -170,7 +170,7 @@ python -m server.app
 When the web interface is enabled, open `/web` and use the `Task Selector` tab to load any of the five benchmark scenarios before stepping through them in the standard playground.
 
 Two interaction tips for demos:
-- Every task starts at `reward = 0.00` on reset because no progress has been made yet.
+- Every task starts at `reward = 0.01` on reset because no progress has been made yet and the benchmark keeps scores strictly inside `(0.0, 1.0)`.
 - After loading a task in `Task Selector`, switch to `Playground` and click `Step` with a valid action. Do not click `Playground Reset` unless you want to return to the default Task 1 scenario.
 
 ### Quick Direct Test
@@ -224,20 +224,20 @@ The script emits logs in this exact format:
 
 ```text
 [START] task=<task_name> env=<benchmark> model=<model_name>
-[STEP] step=<n> action=<action_str> reward=<0.00> done=<true|false> error=<msg|null>
+[STEP] step=<n> action=<action_str> reward=<0.01> done=<true|false> error=<msg|null>
 [END] success=<true|false> steps=<n> score=<score> rewards=<r1,r2,...,rn>
 ```
 
 ## Baseline Scores
 
 Measured with the included `inference.py` baseline runner:
-- Task 1: `1.00`
-- Task 2: `1.00`
-- Task 3: `1.00`
-- Task 4: `1.00`
-- Task 5: `1.00`
+- Task 1: `0.99`
+- Task 2: `0.99`
+- Task 3: `0.99`
+- Task 4: `0.99`
+- Task 5: `0.99`
 
-The script runs in well under the 20 minute inference limit on the current 5-task benchmark, and each task has a deterministic maximum score of `1.00` with a partial-credit trajectory along the way.
+The script runs in well under the 20 minute inference limit on the current 5-task benchmark, and each task has a deterministic maximum score of `0.99` with partial-credit trajectory signals down to `0.01`.
 
 ## Project Structure
 

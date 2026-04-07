@@ -11,6 +11,8 @@ from openai import OpenAI
 try:
     from server.hospital_triage_environment import (
         BENCHMARK_NAME,
+        MAX_TASK_SCORE,
+        MIN_TASK_SCORE,
         TASK_SEQUENCE,
         HospitalTriageEnvironment,
     )
@@ -18,6 +20,8 @@ try:
 except ImportError:  # pragma: no cover
     from hospital_triage.server.hospital_triage_environment import (  # type: ignore
         BENCHMARK_NAME,
+        MAX_TASK_SCORE,
+        MIN_TASK_SCORE,
         TASK_SEQUENCE,
         HospitalTriageEnvironment,
     )
@@ -44,7 +48,7 @@ def run_task(*, client: OpenAI, model_name: str, task_name: TaskName) -> None:
     env = HospitalTriageEnvironment()
     rewards: list[str] = []
     step_count = 0
-    final_score = 0.0
+    final_score = MIN_TASK_SCORE
     success = False
     print(f"[START] task={task_name} env={BENCHMARK_NAME} model={model_name}")
 
@@ -61,7 +65,7 @@ def run_task(*, client: OpenAI, model_name: str, task_name: TaskName) -> None:
             step_count += 1
             reward_str = format_reward(observation.reward)
             rewards.append(reward_str)
-            final_score = float(observation.reward or 0.0)
+            final_score = float(observation.reward if observation.reward is not None else MIN_TASK_SCORE)
             done_str = str(bool(observation.done)).lower()
             action_str = json.dumps(action.model_dump(exclude_none=True), separators=(",", ":"))
             env_error = observation.metadata.get("last_action_error") if observation.metadata else None
@@ -71,7 +75,7 @@ def run_task(*, client: OpenAI, model_name: str, task_name: TaskName) -> None:
                 f"done={done_str} error={error_str}"
             )
 
-        success = final_score >= 0.995
+        success = final_score >= MAX_TASK_SCORE
     except Exception:
         success = False
     finally:
@@ -365,7 +369,8 @@ def extract_json_object(content: str) -> dict[str, Any]:
 
 
 def format_reward(value: Any) -> str:
-    return f"{float(value or 0.0):.2f}"
+    normalized = MIN_TASK_SCORE if value is None else float(value)
+    return f"{normalized:.2f}"
 
 
 if __name__ == "__main__":
