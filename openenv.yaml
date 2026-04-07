@@ -1,0 +1,7 @@
+spec_version: 1
+name: hospital_triage
+type: space
+runtime: fastapi
+app: server.app:app
+port: 8000
+description: Deterministic hospital triage and scheduling benchmark with five graded RL tasks.

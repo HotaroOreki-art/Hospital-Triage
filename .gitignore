@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.tmp_install/
+.venv/
+build/
+dist/
+.coverage
+
+outputs/*
+!outputs/logs/
+!outputs/logs/.gitkeep
+!outputs/evals/
+!outputs/evals/.gitkeep
