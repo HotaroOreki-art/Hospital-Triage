@@ -333,7 +333,13 @@ def _format_demo_steps(task_name: str | None) -> str:
 
     demo_steps = TASK_DEMO_ACTIONS.get(task_name, [])
     if not demo_steps:
-        return "No demo steps are configured for this task yet."
+        return (
+            "### Demo Steps\n\n"
+            "This is a newly generated RL training scenario.\n\n"
+            "**Expected reward path:** `0.01 -> ... -> 0.99`\n\n"
+            "There is no hardcoded cheat-sheet for this task. You must read the patient observations "
+            "and submit valid `ActionCommand` JSONs in the Playground to successfully triage the patients and maximize the reward!"
+        )
 
     reward_path = " -> ".join(["0.01"] + [step["expected_reward"] for step in demo_steps])
     blocks = [
