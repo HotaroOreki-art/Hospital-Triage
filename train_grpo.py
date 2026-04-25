@@ -36,7 +36,7 @@ for task_name in TASK_SEQUENCE:
     obs = env.reset(task_name=task_name)
     prompt = f"""You are an autonomous triage agent. Given the hospital state, determine the safest action.
 State:
-{json.dumps(obs.state.model_dump(), indent=2)}
+{json.dumps(obs.model_dump(), indent=2)}
 
 Respond ONLY with valid JSON containing your decision. Example:
 {{"command": "SendToER", "patient_id": "p-1-0"}}
