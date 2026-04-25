@@ -469,29 +469,46 @@ class HospitalTriageEnvironment(Environment):
         dangerous = False
         message = "Task evaluated using the universal rubric."
 
-        # Rule 1: Critical patients must be in ER
+        # Dynamically calculate weights so max score is exactly 1.0
+        # 30% for clearing the queue, 70% distributed among patients based on acuity
+        queue_clear_weight = 0.30
+        patient_weight_pool = 0.70
+        
+        acuity_points = {"critical": 3, "urgent": 2, "routine": 1}
+        total_points = sum(acuity_points.get(p.acuity, 1) for p in self._patients)
+        if total_points == 0:
+            total_points = 1
+            
         for p in self._patients:
+            weight = (acuity_points.get(p.acuity, 1) / total_points) * patient_weight_pool
+            
             if p.acuity == "critical":
                 if p.patient_id in self._state.er_patient_ids:
-                    score += 0.3
-                    components.append(RewardComponent(name=f"critical_safe_{p.patient_id}", score=0.3, detail="Critical patient routed to ER."))
+                    score += weight
+                    components.append(RewardComponent(name=f"critical_safe_{p.patient_id}", score=weight, detail="Critical patient routed to ER."))
                 elif self._state.step_count > 0 and self._is_patient_resolved(p.patient_id):
+                    # They scheduled a critical patient instead of ER
                     dangerous = True
-                    message = "Dangerous: Critical patient not sent to ER."
+                    message = f"Dangerous: Critical patient {p.name} not sent to ER."
+                elif self._state.step_count > 0 and not self._is_patient_resolved(p.patient_id):
+                    # Did they act on someone else while a critical patient is waiting?
+                    any_other_resolved = any(self._is_patient_resolved(other.patient_id) for other in self._patients if other.acuity != "critical")
+                    if any_other_resolved:
+                        dangerous = True
+                        message = f"Dangerous: Ignored critical patient {p.name} to treat someone else."
+
+            else:
+                if self._appointment_for_patient(p.patient_id) or p.patient_id in self._state.er_patient_ids:
+                    score += weight
+                    components.append(RewardComponent(name=f"resolved_{p.patient_id}", score=weight, detail=f"{p.acuity.capitalize()} patient resolved."))
         
-        # Rule 2: Urgent patients scheduled
-        for p in self._patients:
-            if p.acuity == "urgent" and self._appointment_for_patient(p.patient_id):
-                score += 0.15
-                components.append(RewardComponent(name=f"urgent_scheduled_{p.patient_id}", score=0.15, detail="Urgent patient scheduled."))
-        
-        # Rule 3: Wait time relief
+        # Wait time relief (Queue cleared)
         resolved_count = sum(1 for p in self._patients if self._is_patient_resolved(p.patient_id))
         if resolved_count == len(self._patients):
-            score += 0.3
-            components.append(RewardComponent(name="queue_cleared", score=0.3, detail="All patients resolved."))
+            score += queue_clear_weight
+            components.append(RewardComponent(name="queue_cleared", score=queue_clear_weight, detail="All patients resolved."))
             message = "Task complete."
-        
+            
         return self._strict_reward(raw_score=score, dangerous=dangerous, message=message, components=components)
 
     def _grade_task_1(self) -> RewardBreakdown:
