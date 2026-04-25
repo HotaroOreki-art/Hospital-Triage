@@ -43,8 +43,13 @@ for task_name in TASK_SEQUENCE:
 State:
 {json.dumps(obs.model_dump(), indent=2)}
 
-Respond ONLY with valid JSON containing your decision. Example:
-{{"command": "SendToER", "patient_id": "p-1-0"}}
+Respond ONLY in this exact JSON format:
+{{"command": "...", "patient_id": "..."}}
+
+Rules:
+* DO NOT explain anything
+* DO NOT output text outside JSON
+* INVALID format = failure
 """
     # Hardcode the Gemma chat template to avoid tokenizer attribute errors
     prompt = f"<start_of_turn>user\n{raw_prompt}<end_of_turn>\n<start_of_turn>model\n"
@@ -92,26 +97,31 @@ def extract_json(text):
             return None
     return None
 
-def safety_reward_func(completions, **kwargs):
-    """Rewards models that issue SendToER."""
+def bootstrap_reward_func(completions, **kwargs):
+    """Phase 1: Easy signal to bootstrap learning of JSON syntax."""
     rewards = []
     for completion in completions:
-        text = completion[0]['content'] if isinstance(completion, list) else completion
-        parsed = extract_json(text)
+        if isinstance(completion, list):
+            text = completion[0].get("content", "")
+        else:
+            text = str(completion)
+            
+        print(f"MODEL OUTPUT: {text[:200]}")
+            
         score = 0.0
-        if parsed and parsed.get("command") == "SendToER":
-            score += 0.5
+        
+        # Easy signal to bootstrap learning
+        if "{" in text:
+            score += 0.2
+        if "}" in text:
+            score += 0.2
+        if "command" in text:
+            score += 0.3
+        if "patient_id" in text:
+            score += 0.3
+            
         rewards.append(score)
-    return rewards
-
-def formatting_reward_func(completions, **kwargs):
-    """Rewards models that output strictly valid JSON."""
-    rewards = []
-    for completion in completions:
-        text = completion[0]['content'] if isinstance(completion, list) else completion
-        parsed = extract_json(text)
-        score = 0.5 if parsed and "command" in parsed and "patient_id" in parsed else 0.0
-        rewards.append(score)
+        
     return rewards
 
 # 5. Custom Callback for Matplotlib Plotting
@@ -129,8 +139,7 @@ class MetricPlotterCallback(TrainerCallback):
                 self.steps.append(state.global_step)
             # TRL typically logs reward as 'reward' or similar
             reward_val = logs.get("reward", logs.get("eval_reward", 0))
-            if reward_val != 0:
-                self.rewards.append(reward_val)
+            self.rewards.append(reward_val) # So reward graph reflects early learning
                 
     def on_train_end(self, args, state, control, **kwargs):
         if self.losses:
@@ -191,7 +200,7 @@ if __name__ == "__main__":
         gradient_accumulation_steps=4,
         num_generations=2, # MUST be 2 or 4 for Colab T4 to avoid OOM
         max_prompt_length=2500,
-        max_completion_length=256,
+        max_completion_length=128,
         logging_steps=1,
         report_to="wandb", # Full WandB Integration!
         run_name="hospital_triage_grpo_run",
@@ -202,7 +211,7 @@ if __name__ == "__main__":
 
     trainer = GRPOTrainer(
         model=model,
-        reward_funcs=[safety_reward_func, formatting_reward_func],
+        reward_funcs=[bootstrap_reward_func],
         args=training_args,
         train_dataset=dataset,
         callbacks=[plot_callback]
