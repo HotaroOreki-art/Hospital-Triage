@@ -39,18 +39,20 @@ test_data = []
 
 for task_name in TASK_SEQUENCE:
     obs = env.reset(task_name=task_name)
-    prompt = f"""You are an autonomous triage agent. Given the hospital state, determine the safest action.
+    raw_prompt = f"""You are an autonomous triage agent. Given the hospital state, determine the safest action.
 State:
 {json.dumps(obs.model_dump(), indent=2)}
 
 Respond ONLY with valid JSON containing your decision. Example:
 {{"command": "SendToER", "patient_id": "p-1-0"}}
 """
-    formatted_prompt = [{"role": "user", "content": prompt}]
+    # Hardcode the Gemma chat template to avoid tokenizer attribute errors
+    prompt = f"<start_of_turn>user\n{raw_prompt}<end_of_turn>\n<start_of_turn>model\n"
+    
     if "test" in task_name.lower():
-        test_data.append({"prompt": formatted_prompt, "task_name": task_name})
+        test_data.append({"prompt": prompt, "task_name": task_name})
     else:
-        train_data.append({"prompt": formatted_prompt, "task_name": task_name})
+        train_data.append({"prompt": prompt, "task_name": task_name})
 
 if not train_data:
     print("⚠️ No valid data found, using dummy data for verification.")
@@ -66,12 +68,7 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     load_in_4bit=True,
 )
 
-# Apply Gemma chat template for instruction parsing
-from unsloth.chat_templates import get_chat_template
-tokenizer = get_chat_template(
-    tokenizer,
-    chat_template="gemma",
-)
+# (Removed unsloth get_chat_template since we hardcoded the tokens)
 
 # Enable PEFT for GRPO
 model = FastLanguageModel.get_peft_model(
@@ -165,21 +162,12 @@ def run_inference(task_name, description="Inference"):
     
     test_prompt = test_data[0]["prompt"] if test_data else train_data[0]["prompt"]
     
-    # Apply chat template
-    inputs = tokenizer.apply_chat_template(
-        test_prompt,
-        tokenize=True,
-        add_generation_prompt=True,
-        return_tensors="pt"
-    ).to("cuda")
-    
-    outputs = model.generate(inputs, max_new_tokens=256, use_cache=True)
+    inputs = tokenizer([test_prompt], return_tensors="pt").to("cuda")
+    outputs = model.generate(**inputs, max_new_tokens=256, use_cache=True)
     response = tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
     
-    # Because we used a chat template, the output will contain the whole prompt.
-    # A quick way to get the new tokens is to decode only the generated slice.
-    generated_ids = outputs[0][inputs.shape[1]:]
-    answer = tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
+    # Strip the prompt
+    answer = response[len(tokenizer.decode(inputs["input_ids"][0], skip_special_tokens=True)):].strip()
     
     print("\n[Model Output]:")
     print(answer)
