@@ -11,8 +11,13 @@
 import os
 import re
 import json
+import gc
 import torch
 import matplotlib.pyplot as plt
+
+# Free any zombie memory from previous Colab crashes
+torch.cuda.empty_cache()
+gc.collect()
 
 # IMPORTANT: Unsloth must be imported before transformers/trl for optimizations to apply
 from unsloth import FastLanguageModel
