@@ -46,10 +46,11 @@ State:
 Respond ONLY with valid JSON containing your decision. Example:
 {{"command": "SendToER", "patient_id": "p-1-0"}}
 """
+    formatted_prompt = [{"role": "user", "content": prompt}]
     if "test" in task_name.lower():
-        test_data.append({"prompt": prompt, "task_name": task_name})
+        test_data.append({"prompt": formatted_prompt, "task_name": task_name})
     else:
-        train_data.append({"prompt": prompt, "task_name": task_name})
+        train_data.append({"prompt": formatted_prompt, "task_name": task_name})
 
 if not train_data:
     print("⚠️ No valid data found, using dummy data for verification.")
@@ -156,13 +157,23 @@ def run_inference(task_name, description="Inference"):
     FastLanguageModel.for_inference(model) # Enable native inference speeds
     
     test_prompt = test_data[0]["prompt"] if test_data else train_data[0]["prompt"]
-    inputs = tokenizer([test_prompt], return_tensors="pt").to("cuda")
     
-    outputs = model.generate(**inputs, max_new_tokens=256, use_cache=True)
+    # Apply chat template
+    inputs = tokenizer.apply_chat_template(
+        test_prompt,
+        tokenize=True,
+        add_generation_prompt=True,
+        return_tensors="pt"
+    ).to("cuda")
+    
+    outputs = model.generate(inputs, max_new_tokens=256, use_cache=True)
     response = tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
     
-    # Strip the prompt from the response so we only print the model's answer
-    answer = response[len(test_prompt):].strip()
+    # Because we used a chat template, the output will contain the whole prompt.
+    # A quick way to get the new tokens is to decode only the generated slice.
+    generated_ids = outputs[0][inputs.shape[1]:]
+    answer = tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
+    
     print("\n[Model Output]:")
     print(answer)
     print("\n" + "="*50)
