@@ -66,6 +66,13 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     load_in_4bit=True,
 )
 
+# Apply Gemma chat template for instruction parsing
+from unsloth.chat_templates import get_chat_template
+tokenizer = get_chat_template(
+    tokenizer,
+    chat_template="gemma",
+)
+
 # Enable PEFT for GRPO
 model = FastLanguageModel.get_peft_model(
     model,
