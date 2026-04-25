@@ -53,7 +53,7 @@ if not train_data:
 dataset = Dataset.from_list(train_data)
 
 # 3. Model Loading (Unsloth 4-bit for Colab T4 GPU)
-max_seq_length = 2048
+max_seq_length = 4096
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name="unsloth/gemma-2b-it", # Swap with unsloth/Qwen2.5-7B-Instruct for production
     max_seq_length=max_seq_length,
@@ -178,7 +178,7 @@ if __name__ == "__main__":
         learning_rate=5e-6,
         per_device_train_batch_size=1,
         gradient_accumulation_steps=4,
-        max_prompt_length=1024,
+        max_prompt_length=3000,
         max_completion_length=256,
         logging_steps=1,
         report_to="wandb", # Full WandB Integration!
