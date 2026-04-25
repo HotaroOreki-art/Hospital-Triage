@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from uuid import uuid4
 import json
 import os
+from pathlib import Path
 
 from openenv.core.env_server.interfaces import Environment
 
@@ -1739,31 +1740,69 @@ class HospitalTriageEnvironment(Environment):
             ),
         }
         
-        # Dynamically load from data/ folder
-        if os.path.exists("data"):
-            for filename in os.listdir("data"):
-                if filename.endswith(".json"):
-                    with open(os.path.join("data", filename), "r") as f:
-                        data = json.load(f)
-                        for item in data:
-                            task_name = item["task_name"]
-                            if task_name not in TASK_SEQUENCE:
-                                TASK_SEQUENCE.append(task_name)
-                                TASK_METADATA[task_name] = {
-                                    "label": f"Generated: {task_name}",
-                                    "difficulty": "Unknown"
-                                }
-                            
-                            base_tasks[task_name] = TaskScenario(
-                                task_name=task_name,
-                                instruction=item.get("instruction", ""),
-                                max_steps=item.get("max_steps", 5),
-                                er_bed_capacity=item.get("er_bed_capacity", 2),
-                                patients=[PatientObservation(**p) for p in item.get("patients", [])],
-                                doctors=[DoctorScheduleObservation(**d) for d in item.get("doctors", [])],
-                                rooms=[RoomAvailabilityObservation(**r) for r in item.get("rooms", [])],
-                                info_bank=item.get("info_bank", {}),
-                                recommendation_bank={k: PendingRecommendation(**v) for k, v in item.get("recommendation_bank", {}).items()},
-                                grader_name="_grade_generalized_task",
-                            )
+        # Dynamically load dataset files without failing startup on malformed files.
+        # By default we only include train_scenarios.json for Hugging Face training.
+        # Set INCLUDE_TEST_SCENARIOS=1 to also load test_scenarios.json.
+        project_root = Path(__file__).resolve().parent.parent
+        candidate_files: list[Path] = []
+
+        include_test_scenarios = os.getenv("INCLUDE_TEST_SCENARIOS", "").strip().lower() in {
+            "1",
+            "true",
+            "yes",
+            "on",
+        }
+        data_dir = project_root / "data"
+        train_file = data_dir / "train_scenarios.json"
+        test_file = data_dir / "test_scenarios.json"
+
+        if train_file.exists():
+            candidate_files.append(train_file)
+        if include_test_scenarios and test_file.exists():
+            candidate_files.append(test_file)
+
+        for json_file in candidate_files:
+            try:
+                with json_file.open("r", encoding="utf-8") as f:
+                    data = json.load(f)
+            except (OSError, json.JSONDecodeError):
+                continue
+
+            if not isinstance(data, list):
+                continue
+
+            for item in data:
+                if not isinstance(item, dict):
+                    continue
+                task_name = item.get("task_name")
+                if not isinstance(task_name, str) or not task_name:
+                    continue
+
+                try:
+                    scenario = TaskScenario(
+                        task_name=task_name,
+                        instruction=item.get("instruction", ""),
+                        max_steps=item.get("max_steps", 5),
+                        er_bed_capacity=item.get("er_bed_capacity", 2),
+                        patients=[PatientObservation(**p) for p in item.get("patients", [])],
+                        doctors=[DoctorScheduleObservation(**d) for d in item.get("doctors", [])],
+                        rooms=[RoomAvailabilityObservation(**r) for r in item.get("rooms", [])],
+                        info_bank=item.get("info_bank", {}),
+                        recommendation_bank={
+                            k: PendingRecommendation(**v)
+                            for k, v in item.get("recommendation_bank", {}).items()
+                        },
+                        grader_name="_grade_generalized_task",
+                    )
+                except (TypeError, ValueError, KeyError):
+                    continue
+
+                if task_name not in TASK_SEQUENCE:
+                    TASK_SEQUENCE.append(task_name)
+                    TASK_METADATA[task_name] = {
+                        "label": f"Generated: {task_name}",
+                        "difficulty": "Unknown",
+                    }
+
+                base_tasks[task_name] = scenario
         return base_tasks

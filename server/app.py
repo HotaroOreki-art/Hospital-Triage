@@ -28,7 +28,9 @@ Usage:
     python -m server.app
 """
 
+import argparse
 import json
+import os
 from typing import Any
 
 try:
@@ -455,6 +457,13 @@ app = create_app(
 )
 
 
+@app.get("/", include_in_schema=False)
+async def root_redirect():
+    from fastapi.responses import RedirectResponse
+
+    return RedirectResponse(url="/web")
+
+
 def main(host: str = "0.0.0.0", port: int = 8000):
     """
     Entry point for direct execution via uv run or python -m.
@@ -472,9 +481,17 @@ def main(host: str = "0.0.0.0", port: int = 8000):
     multiple workers:
         uvicorn hospital_triage.server.app:app --workers 4
     """
+    parser = argparse.ArgumentParser(description="Run the Hospital Triage FastAPI app.")
+    parser.add_argument("--host", default=host)
+    parser.add_argument("--port", type=int, default=port)
+    args = parser.parse_args()
+
+    resolved_host = args.host
+    resolved_port = int(os.getenv("PORT", str(args.port)))
+
     import uvicorn
 
-    uvicorn.run(app, host=host, port=port)
+    uvicorn.run(app, host=resolved_host, port=resolved_port)
 
 
 if __name__ == "__main__":
