@@ -13,8 +13,10 @@ import re
 import json
 import torch
 import matplotlib.pyplot as plt
-from transformers import TrainerCallback, set_seed
+
+# IMPORTANT: Unsloth must be imported before transformers/trl for optimizations to apply
 from unsloth import FastLanguageModel
+from transformers import TrainerCallback, set_seed
 from trl import GRPOTrainer, GRPOConfig
 from datasets import Dataset
 from hospital_triage.server.hospital_triage_environment import HospitalTriageEnvironment, TASK_SEQUENCE
