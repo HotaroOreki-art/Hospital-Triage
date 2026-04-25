@@ -14,6 +14,9 @@ COPY --chown=user . /app
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -e .
 
+# Enable OpenEnv web interface
+ENV ENABLE_WEB_INTERFACE="true"
+
 # Hugging Face routes port 7860 automatically based on your README.md
 EXPOSE 7860
 
