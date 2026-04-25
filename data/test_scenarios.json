@@ -1,0 +1,3568 @@
+[
+  {
+    "task_name": "task_test_0",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-0-0",
+        "name": "Patient 0",
+        "age": 18,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "internal_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 38,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-0-1",
+        "name": "Patient 1",
+        "age": 43,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "psychiatry",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 54,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-0-2",
+        "name": "Patient 2",
+        "age": 13,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "neurology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 23,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_1",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-1-0",
+        "name": "Patient 0",
+        "age": 54,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 33,
+        "uncertainty_level": "high",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-1-1",
+        "name": "Patient 1",
+        "age": 63,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "surgery",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 21,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_2",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-2-0",
+        "name": "Patient 0",
+        "age": 74,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "internal_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 56,
+        "uncertainty_level": "low",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-2-1",
+        "name": "Patient 1",
+        "age": 52,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 18,
+        "uncertainty_level": "low",
+        "requires_clinician_review": true
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_3",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-3-0",
+        "name": "Patient 0",
+        "age": 68,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "pediatrics",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 50,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-3-1",
+        "name": "Patient 1",
+        "age": 16,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "neurology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 38,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-3-2",
+        "name": "Patient 2",
+        "age": 38,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "pediatrics",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 10,
+        "uncertainty_level": "high",
+        "requires_clinician_review": false
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_4",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-4-0",
+        "name": "Patient 0",
+        "age": 36,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "surgery",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 51,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-4-1",
+        "name": "Patient 1",
+        "age": 74,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 54,
+        "uncertainty_level": "high",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-4-2",
+        "name": "Patient 2",
+        "age": 6,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "psychiatry",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 11,
+        "uncertainty_level": "high",
+        "requires_clinician_review": false
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_5",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-5-0",
+        "name": "Patient 0",
+        "age": 49,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "emergency_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 20,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-5-1",
+        "name": "Patient 1",
+        "age": 27,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "emergency_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 39,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-5-2",
+        "name": "Patient 2",
+        "age": 66,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "neurology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 30,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": true
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_6",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-6-0",
+        "name": "Patient 0",
+        "age": 6,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "internal_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 31,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-6-1",
+        "name": "Patient 1",
+        "age": 34,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 46,
+        "uncertainty_level": "high",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-6-2",
+        "name": "Patient 2",
+        "age": 26,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "surgery",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 2,
+        "uncertainty_level": "low",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-6-3",
+        "name": "Patient 3",
+        "age": 29,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "internal_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 0,
+        "uncertainty_level": "high",
+        "requires_clinician_review": true
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_7",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-7-0",
+        "name": "Patient 0",
+        "age": 18,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "neurology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 3,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-7-1",
+        "name": "Patient 1",
+        "age": 68,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "emergency_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 5,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-7-2",
+        "name": "Patient 2",
+        "age": 53,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "psychiatry",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 41,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_8",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-8-0",
+        "name": "Patient 0",
+        "age": 24,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "psychiatry",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 28,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-8-1",
+        "name": "Patient 1",
+        "age": 18,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "neurology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 10,
+        "uncertainty_level": "high",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-8-2",
+        "name": "Patient 2",
+        "age": 69,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "psychiatry",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 15,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_9",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-9-0",
+        "name": "Patient 0",
+        "age": 10,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "neurology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 28,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-9-1",
+        "name": "Patient 1",
+        "age": 31,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "internal_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 8,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-9-2",
+        "name": "Patient 2",
+        "age": 36,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "pediatrics",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 43,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_10",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-10-0",
+        "name": "Patient 0",
+        "age": 6,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 44,
+        "uncertainty_level": "low",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-10-1",
+        "name": "Patient 1",
+        "age": 79,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "psychiatry",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 6,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_11",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-11-0",
+        "name": "Patient 0",
+        "age": 24,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "emergency_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 57,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-11-1",
+        "name": "Patient 1",
+        "age": 24,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 46,
+        "uncertainty_level": "low",
+        "requires_clinician_review": true
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_12",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-12-0",
+        "name": "Patient 0",
+        "age": 5,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "pediatrics",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 43,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-12-1",
+        "name": "Patient 1",
+        "age": 28,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "surgery",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 36,
+        "uncertainty_level": "low",
+        "requires_clinician_review": true
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_13",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-13-0",
+        "name": "Patient 0",
+        "age": 73,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "surgery",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 5,
+        "uncertainty_level": "high",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-13-1",
+        "name": "Patient 1",
+        "age": 30,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "pediatrics",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 17,
+        "uncertainty_level": "low",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-13-2",
+        "name": "Patient 2",
+        "age": 15,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 37,
+        "uncertainty_level": "high",
+        "requires_clinician_review": true
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_14",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-14-0",
+        "name": "Patient 0",
+        "age": 15,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "psychiatry",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 50,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-14-1",
+        "name": "Patient 1",
+        "age": 50,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "emergency_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 40,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": true
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_15",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-15-0",
+        "name": "Patient 0",
+        "age": 6,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "psychiatry",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 34,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-15-1",
+        "name": "Patient 1",
+        "age": 47,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "emergency_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 0,
+        "uncertainty_level": "low",
+        "requires_clinician_review": true
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_16",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-16-0",
+        "name": "Patient 0",
+        "age": 26,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 39,
+        "uncertainty_level": "high",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-16-1",
+        "name": "Patient 1",
+        "age": 16,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "surgery",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 56,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-16-2",
+        "name": "Patient 2",
+        "age": 37,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "internal_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 55,
+        "uncertainty_level": "high",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-16-3",
+        "name": "Patient 3",
+        "age": 35,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 13,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_17",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-17-0",
+        "name": "Patient 0",
+        "age": 12,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "pediatrics",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 5,
+        "uncertainty_level": "low",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-17-1",
+        "name": "Patient 1",
+        "age": 58,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "emergency_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 59,
+        "uncertainty_level": "high",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-17-2",
+        "name": "Patient 2",
+        "age": 65,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "surgery",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 31,
+        "uncertainty_level": "high",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-17-3",
+        "name": "Patient 3",
+        "age": 67,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "pediatrics",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 21,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": true
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_18",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-18-0",
+        "name": "Patient 0",
+        "age": 56,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "surgery",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 47,
+        "uncertainty_level": "high",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-18-1",
+        "name": "Patient 1",
+        "age": 33,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 24,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-18-2",
+        "name": "Patient 2",
+        "age": 34,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "psychiatry",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 34,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-18-3",
+        "name": "Patient 3",
+        "age": 63,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "urgent",
+        "required_specialty": "internal_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 28,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  },
+  {
+    "task_name": "task_test_19",
+    "instruction": "Triage these patients safely.",
+    "max_steps": 5,
+    "er_bed_capacity": 2,
+    "patients": [
+      {
+        "patient_id": "p-19-0",
+        "name": "Patient 0",
+        "age": 23,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "emergency_medicine",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 55,
+        "uncertainty_level": "high",
+        "requires_clinician_review": true
+      },
+      {
+        "patient_id": "p-19-1",
+        "name": "Patient 1",
+        "age": 13,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "critical",
+        "required_specialty": "psychiatry",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 7,
+        "uncertainty_level": "medium",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-19-2",
+        "name": "Patient 2",
+        "age": 49,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "cardiology",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 54,
+        "uncertainty_level": "high",
+        "requires_clinician_review": false
+      },
+      {
+        "patient_id": "p-19-3",
+        "name": "Patient 3",
+        "age": 33,
+        "symptoms": [
+          "pain"
+        ],
+        "acuity": "routine",
+        "required_specialty": "surgery",
+        "disposition": "waiting",
+        "notes": [
+          "Generated case."
+        ],
+        "estimated_wait_minutes": 22,
+        "uncertainty_level": "low",
+        "requires_clinician_review": true
+      }
+    ],
+    "doctors": [
+      {
+        "doctor_id": "d-0",
+        "name": "Dr. Carter",
+        "specialty": "surgery",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-1",
+        "name": "Dr. Langdon",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-2",
+        "name": "Dr. Javadi",
+        "specialty": "emergency_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-3",
+        "name": "Dr. Garcia",
+        "specialty": "internal_medicine",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "doctor_id": "d-4",
+        "name": "Dr. Mohan",
+        "specialty": "toxicology",
+        "status": "available",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "room-er-0",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-1",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-er-2",
+        "room_type": "er",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-0",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-1",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-2",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-3",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      },
+      {
+        "room_id": "room-exam-4",
+        "room_type": "exam",
+        "available_slots": [
+          "2026-04-25T19:00",
+          "2026-04-25T19:30"
+        ]
+      }
+    ],
+    "info_bank": {},
+    "recommendation_bank": {},
+    "grader_name": "_grade_generalized_task"
+  }
+]

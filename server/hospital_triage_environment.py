@@ -10,6 +10,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from uuid import uuid4
+import json
+import os
 
 from openenv.core.env_server.interfaces import Environment
 
@@ -50,13 +52,13 @@ except ImportError:  # pragma: no cover
 BENCHMARK_NAME = "hospital_triage"
 MIN_TASK_SCORE = 0.01
 MAX_TASK_SCORE = 0.99
-TASK_SEQUENCE: tuple[TaskName, ...] = (
+TASK_SEQUENCE: list[TaskName] = [
     "task_1_routine_checkup",
     "task_2_multi_patient_triage",
     "task_3_specialty_reschedule",
     "task_4_ambiguous_walk_in",
     "task_5_evening_surge_coordination",
-)
+]
 TASK_METADATA: dict[TaskName, dict[str, str]] = {
     "task_1_routine_checkup": {
         "label": "Task 1: Routine Check-Up",
@@ -460,6 +462,36 @@ class HospitalTriageEnvironment(Environment):
         patient.estimated_wait_minutes = 0
         self._state.resolution_steps.setdefault(patient.patient_id, self._state.step_count)
         return f"Sent {patient.name} to the ER."
+    def _grade_generalized_task(self) -> RewardBreakdown:
+        score = 0.0
+        components: list[RewardComponent] = []
+        dangerous = False
+        message = "Task evaluated using the universal rubric."
+
+        # Rule 1: Critical patients must be in ER
+        for p in self._patients:
+            if p.acuity == "critical":
+                if p.patient_id in self._state.er_patient_ids:
+                    score += 0.3
+                    components.append(RewardComponent(name=f"critical_safe_{p.patient_id}", score=0.3, detail="Critical patient routed to ER."))
+                elif self._state.step_count > 0 and self._is_patient_resolved(p.patient_id):
+                    dangerous = True
+                    message = "Dangerous: Critical patient not sent to ER."
+        
+        # Rule 2: Urgent patients scheduled
+        for p in self._patients:
+            if p.acuity == "urgent" and self._appointment_for_patient(p.patient_id):
+                score += 0.15
+                components.append(RewardComponent(name=f"urgent_scheduled_{p.patient_id}", score=0.15, detail="Urgent patient scheduled."))
+        
+        # Rule 3: Wait time relief
+        resolved_count = sum(1 for p in self._patients if self._is_patient_resolved(p.patient_id))
+        if resolved_count == len(self._patients):
+            score += 0.3
+            components.append(RewardComponent(name="queue_cleared", score=0.3, detail="All patients resolved."))
+            message = "Task complete."
+        
+        return self._strict_reward(raw_score=score, dangerous=dangerous, message=message, components=components)
 
     def _grade_task_1(self) -> RewardBreakdown:
         appointment = self._appointment_for_patient("p-routine-1")
@@ -1050,7 +1082,7 @@ class HospitalTriageEnvironment(Environment):
 
     @classmethod
     def _build_task_map(cls) -> dict[TaskName, TaskScenario]:
-        return {
+        base_tasks = {
             "task_1_routine_checkup": TaskScenario(
                 task_name="task_1_routine_checkup",
                 instruction=(
@@ -1706,3 +1738,32 @@ class HospitalTriageEnvironment(Environment):
                 grader_name="_grade_task_5",
             ),
         }
+        
+        # Dynamically load from data/ folder
+        if os.path.exists("data"):
+            for filename in os.listdir("data"):
+                if filename.endswith(".json"):
+                    with open(os.path.join("data", filename), "r") as f:
+                        data = json.load(f)
+                        for item in data:
+                            task_name = item["task_name"]
+                            if task_name not in TASK_SEQUENCE:
+                                TASK_SEQUENCE.append(task_name)
+                                TASK_METADATA[task_name] = {
+                                    "label": f"Generated: {task_name}",
+                                    "difficulty": "Unknown"
+                                }
+                            
+                            base_tasks[task_name] = TaskScenario(
+                                task_name=task_name,
+                                instruction=item.get("instruction", ""),
+                                max_steps=item.get("max_steps", 5),
+                                er_bed_capacity=item.get("er_bed_capacity", 2),
+                                patients=[PatientObservation(**p) for p in item.get("patients", [])],
+                                doctors=[DoctorScheduleObservation(**d) for d in item.get("doctors", [])],
+                                rooms=[RoomAvailabilityObservation(**r) for r in item.get("rooms", [])],
+                                info_bank=item.get("info_bank", {}),
+                                recommendation_bank={k: PendingRecommendation(**v) for k, v in item.get("recommendation_bank", {}).items()},
+                                grader_name="_grade_generalized_task",
+                            )
+        return base_tasks

@@ -12,13 +12,7 @@ from openenv.core.env_server.types import Action, Observation, State
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, model_validator
 
 
-TaskName = Literal[
-    "task_1_routine_checkup",
-    "task_2_multi_patient_triage",
-    "task_3_specialty_reschedule",
-    "task_4_ambiguous_walk_in",
-    "task_5_evening_surge_coordination",
-]
+TaskName = StrictStr
 ActionCommand = Literal[
     "BookAppointment",
     "SendToER",
