@@ -21,4 +21,4 @@ ENV ENABLE_WEB_INTERFACE="true"
 EXPOSE 7860
 
 # Start the OpenEnv web server
-CMD ["python", "-m", "hospital_triage.server.app", "--port", "7860", "--host", "0.0.0.0"]
+CMD ["uvicorn", "hospital_triage.server.app:app", "--host", "0.0.0.0", "--port", "7860"]
