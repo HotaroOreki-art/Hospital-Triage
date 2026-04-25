@@ -58,7 +58,6 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     model_name="unsloth/gemma-2b-it", # Swap with unsloth/Qwen2.5-7B-Instruct for production
     max_seq_length=max_seq_length,
     load_in_4bit=True,
-    fast_inference=True,
 )
 
 # Enable PEFT for GRPO
