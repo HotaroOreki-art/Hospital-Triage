@@ -14,8 +14,8 @@ COPY --chown=user . /app
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -e .
 
-# Hugging Face routes port 8000 automatically based on your README.md
-EXPOSE 8000
+# Hugging Face routes port 7860 automatically based on your README.md
+EXPOSE 7860
 
 # Start the OpenEnv web server
-CMD ["python", "-m", "hospital_triage.server.app", "--port", "8000", "--host", "0.0.0.0"]
+CMD ["python", "-m", "hospital_triage.server.app", "--port", "7860", "--host", "0.0.0.0"]
