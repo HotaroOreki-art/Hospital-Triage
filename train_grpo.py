@@ -1,12 +1,24 @@
 # ==============================================================================
-# HACKATHON NOTE: Google Colab Setup
-# Run the following in your first Colab cell to prepare the environment:
+# GOOGLE COLAB — paste these cells in order (GPU runtime: Runtime → Change runtime type → T4 GPU)
 #
+# --- Cell 1: clone + deps + install this repo as a package (needed for `hospital_triage` imports) ---
 # !git clone https://huggingface.co/spaces/HotaroOreki-art/hospital_triage
-# %cd hospital_triage   # required if you paste this script into a notebook (__file__ is undefined there)
-# !pip install -q unsloth trl datasets wandb matplotlib
-# Optional: pip install openenv-core   (only if you use other hospital_triage Python APIs)
-# Optional: wandb login   (otherwise training uses report_to="none" — no W&B account needed)
+# %cd /content/hospital_triage
+# !pip install -q unsloth trl datasets wandb matplotlib openenv-core
+# !pip install -q -e .
+#
+# --- Cell 2 (optional): Weights & Biases — skip if you want offline-only logs ---
+# !wandb login
+#
+# --- Cell 3: run training (recommended — keeps __file__ correct) ---
+# !python train_grpo.py
+#
+# Or paste this entire file into one cell (also works); Drive mount runs only on Colab.
+#
+# Notes for beginners:
+# - Training uses TASK_SEQUENCE from the live HospitalTriageEnvironment (not train_scenarios.json).
+# - data/test_scenarios.json is for offline scenarios; this script does not load it unless you change the code.
+# - I cannot push to Hugging Face for you from here; use the “Push your changes” section in the chat reply.
 # ==============================================================================
 
 import os
@@ -15,7 +27,14 @@ import json
 import gc
 import torch
 import matplotlib
-from google.colab import drive
+
+try:
+    from google.colab import drive as _colab_drive
+
+    _IN_COLAB = True
+except ImportError:
+    _colab_drive = None
+    _IN_COLAB = False
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -30,11 +49,13 @@ from unsloth import FastLanguageModel
 from transformers import TrainerCallback, set_seed
 from trl import GRPOTrainer, GRPOConfig
 from datasets import Dataset
+from hospital_triage.models import HospitalTriageAction
 from hospital_triage.server.hospital_triage_environment import HospitalTriageEnvironment, TASK_SEQUENCE
 
 # 1. Reproducibility
 set_seed(42)
-drive.mount("/content/drive")
+if _IN_COLAB:
+    _colab_drive.mount("/content/drive")
 
 # 2. Model Loading (Unsloth 4-bit for Colab T4 GPU) — before prompts so tokenizer chat template matches the base model
 # Context must fit max_prompt_length + max_completion_length (e.g. 2500 + 512)
@@ -103,9 +124,6 @@ def clinical_reward_func(completions, task_name, **kwargs):
 
         try:
             parsed_json = json.loads(match.group(0))
-            
-            # Must convert to Pydantic action object for the environment
-            from hospital_triage.models import HospitalTriageAction
             action_obj = HospitalTriageAction(**parsed_json)
             
             eval_env = HospitalTriageEnvironment()
@@ -250,7 +268,12 @@ if __name__ == "__main__":
     print("\n🧠 Running Trained Inference...")
     run_inference("test_task_0", description="Trained Model")
 
-    # E. Save Adapters
-    model.save_pretrained("/content/drive/MyDrive/hospital_triage_phase2_model")
-    tokenizer.save_pretrained("/content/drive/MyDrive/hospital_triage_phase2_model")
-    print("\n✅ Training complete. Check the left sidebar for loss.png and reward.png!")
+    # E. Save Adapters (Drive on Colab after mount; local folder otherwise)
+    if _IN_COLAB:
+        _save_dir = "/content/drive/MyDrive/hospital_triage_phase2_model"
+    else:
+        _save_dir = os.environ.get("PHASE2_SAVE_DIR", "grpo_hospital_triage_model")
+    model.save_pretrained(_save_dir)
+    tokenizer.save_pretrained(_save_dir)
+    print(f"\n✅ Training complete. Adapters saved to {_save_dir}")
+    print("Check the left sidebar for loss.png and reward.png (Colab) or your working directory.")
