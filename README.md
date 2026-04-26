@@ -17,19 +17,25 @@ tags:
 🚀 **[Play with the Environment on Hugging Face Spaces!](https://huggingface.co/spaces/HotaroOreki-art/hospital_triage)**
 🎥 **[Watch our <2 Min Pitch Presentation Here](https://youtube.com/...)** *(Replace this link with your YouTube video!)*
 
-## 🧠 Reinforcement Learning Pipeline (Qwen 2.5 7B GRPO)
+## 🧠 Our Journey: Smashing the "Sparse Reward Wall"
 
-We successfully pivoted from a simple API to a fully autonomous medical agent trained via Reinforcement Learning! 
+When we first set out to build this autonomous medical triage agent, we immediately hit a massive roadblock known in Reinforcement Learning as the **"Sparse Reward Wall"**. 
 
-We built a Two-Phase Curriculum using **Unsloth** and **Hugging Face TRL (GRPO)**:
-1. **Phase 1 (Bootstrap Training)**: The agent started completely blank. We shaped the reward to give partial credit for correct JSON syntax (curly brackets, `command` keys). Within 50 steps, the agent learned to speak the strict Pydantic API language perfectly.
-2. **Phase 2 (Clinical Triage Training)**: We swapped the reward function to the live OpenEnv Engine. The agent generated JSON actions, the engine stepped forward in time, and the agent received a reward between `0.01` and `0.99` based on wait-time metrics, ER capacity preservation, and medical safety.
+Because the OpenEnv Hospital Triage API requires strictly formatted Pydantic JSON actions (e.g., `{"command": "BookAppointment", "patient_id": "..."}`), our untrained base model (`Qwen2.5-7B-Instruct`) couldn't generate a single valid response. Every single step returned a score of `0.0`. The GRPO algorithm was completely blind—it had no gradient signal to learn from.
 
-### Training Results
-Our custom `train_grpo.py` natively supports Weights & Biases and local matplotlib plotting. Here is the evidence from our Colab T4 GRPO run!
+To solve this, we engineered a **Two-Phase Curriculum RL Pipeline** using **Unsloth** and **Hugging Face TRL (GRPO)**:
 
-#### Reward Progression (Phase 2)
-The agent successfully learned to optimize its actions for the highest safety reward.
+### Phase 1: Bootstrap Syntax Training
+We temporarily disconnected the agent from the hospital environment and replaced the reward function with a custom "Bootstrap" shaper. Instead of evaluating medical logic, we gave the agent partial credit (`+0.2`) just for outputting a curly bracket `{`, and (`+0.3`) for using the correct keys like `"command"`. Within **just 50 steps**, the GRPO algorithm aggressively steered the model into outputting flawless JSON arrays. The model learned how to "speak" the API.
+
+### Phase 2: Clinical Triage Training
+Once the agent could reliably generate valid JSON, we reconnected it to the live OpenEnv Engine. Now, the agent generated actions, the engine stepped forward in time, and the agent received a penalty/reward strictly between `0.01` and `0.99`. The reward was calculated dynamically based on wait-time metrics, ER capacity preservation, and medical safety. 
+
+### Final Results
+We ran Phase 2 on a free Google Colab T4 GPU. Our custom `train_grpo.py` script natively hooks into Weights & Biases and generates local matplotlib plots. Here is the evidence of our agent successfully learning to optimize triage safety!
+
+#### Reward Progression
+You can literally watch the model discover the medical logic. The baseline reward starts low as the agent makes dangerous scheduling mistakes, but the GRPO algorithm quickly forces the reward curve upward as the agent learns to prioritize critical chest-pain patients.
 ![Reward Progression](reward.png)
 
 #### Training Loss
@@ -42,7 +48,7 @@ The agent successfully learned to optimize its actions for the highest safety re
 Want to reproduce our RL run? We made it incredibly easy.
 1. Open Google Colab with a T4 GPU.
 2. Paste the contents of `train_grpo.py` into a cell and hit play! 
-The script automatically clones this repo, installs the OpenEnv environment globally, configures `Qwen2.5-7B-Instruct` for 4-bit Unsloth tuning, and seamlessly runs the GRPO loop.
+The script automatically clones this repo, installs the OpenEnv environment globally, configures `Qwen2.5-7B-Instruct` for 4-bit Unsloth tuning, mounts your Google Drive, and seamlessly runs the GRPO loop.
 
 ---
 
