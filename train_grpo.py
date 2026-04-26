@@ -3,9 +3,10 @@
 # Run the following in your first Colab cell to prepare the environment:
 #
 # !git clone https://huggingface.co/spaces/HotaroOreki-art/hospital_triage
-# %cd hospital_triage
-# !pip install -q openenv-core unsloth trl datasets wandb matplotlib
-# !wandb login
+# %cd hospital_triage   # required if you paste this script into a notebook (__file__ is undefined there)
+# !pip install -q unsloth trl datasets wandb matplotlib
+# Optional: pip install openenv-core   (only if you use other hospital_triage Python APIs)
+# Optional: wandb login   (otherwise training uses report_to="none" — no W&B account needed)
 # ==============================================================================
 
 import os
@@ -13,10 +14,15 @@ import re
 import json
 import gc
 import torch
+import matplotlib
+from google.colab import drive
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-# Free any zombie memory from previous Colab crashes
-torch.cuda.empty_cache()
+# Free any zombie memory from previous Colab crashes (skip if no CUDA — avoids edge-case errors)
+if torch.cuda.is_available():
+    torch.cuda.empty_cache()
 gc.collect()
 
 # IMPORTANT: Unsloth must be imported before transformers/trl for optimizations to apply
@@ -28,52 +34,16 @@ from hospital_triage.server.hospital_triage_environment import HospitalTriageEnv
 
 # 1. Reproducibility
 set_seed(42)
+drive.mount("/content/drive")
 
-# 2. Environment Setup
-env = HospitalTriageEnvironment()
-print(f"✅ Loaded Environment with {len(env._task_map)} Tasks!")
-
-# Prepare Training & Testing Prompts
-train_data = []
-test_data = []
-
-for task_name in TASK_SEQUENCE:
-    obs = env.reset(task_name=task_name)
-    raw_prompt = f"""You are an autonomous triage agent. Given the hospital state, determine the safest action.
-State:
-{json.dumps(obs.model_dump(), indent=2)}
-
-Respond ONLY in this exact JSON format:
-{{"command": "...", "patient_id": "..."}}
-
-Rules:
-* DO NOT explain anything
-* DO NOT output text outside JSON
-* INVALID format = failure
-"""
-    # Hardcode the Gemma chat template to avoid tokenizer attribute errors
-    prompt = f"<start_of_turn>user\n{raw_prompt}<end_of_turn>\n<start_of_turn>model\n"
-    
-    if "test" in task_name.lower():
-        test_data.append({"prompt": prompt, "task_name": task_name})
-    else:
-        train_data.append({"prompt": prompt, "task_name": task_name})
-
-if not train_data:
-    print("⚠️ No valid data found, using dummy data for verification.")
-    train_data = [{"prompt": f"State {i}", "task_name": f"task_{i}"} for i in range(10)]
-
-dataset = Dataset.from_list(train_data)
-
-# 3. Model Loading (Unsloth 4-bit for Colab T4 GPU)
-max_seq_length = 3000
+# 2. Model Loading (Unsloth 4-bit for Colab T4 GPU) — before prompts so tokenizer chat template matches the base model
+# Context must fit max_prompt_length + max_completion_length (e.g. 2500 + 512)
+max_seq_length = 4096
 model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name="unsloth/gemma-2b-it", # Swap with unsloth/Qwen2.5-7B-Instruct for production
+    model_name="unsloth/Qwen2.5-7B-Instruct",
     max_seq_length=max_seq_length,
     load_in_4bit=True,
 )
-
-# (Removed unsloth get_chat_template since we hardcoded the tokens)
 
 # Enable PEFT for GRPO
 model = FastLanguageModel.get_peft_model(
@@ -86,42 +56,70 @@ model = FastLanguageModel.get_peft_model(
     use_gradient_checkpointing="unsloth",
 )
 
-# 4. Reward Functions (Robust Parsing)
-def extract_json(text):
-    """Regex helper to reliably extract JSON from LLM outputs."""
-    match = re.search(r'\{.*\}', text, re.DOTALL)
-    if match:
-        try:
-            return json.loads(match.group(0))
-        except:
-            return None
-    return None
+# 3. Training prompts from live environment scenarios
+setup_env = HospitalTriageEnvironment()
+train_data = []
+for task_name in TASK_SEQUENCE:
+    obs = setup_env.reset(task_name=task_name)
+    raw_prompt = f"""You are an autonomous triage agent. Given the hospital state, determine the safest action.
+State:
+{json.dumps(obs.model_dump(), indent=2)}
 
-def bootstrap_reward_func(completions, **kwargs):
-    """Phase 1: Easy signal to bootstrap learning of JSON syntax."""
+Respond ONLY with a single valid JSON object (no markdown, no commentary) containing exactly these keys for the OpenEnv hospital triage API:
+{{"command": "...", "patient_id": "...", "doctor_id": "...", "room_id": "...", "time_slot": "...", "question": "...", "recommendation_id": "..."}}
+
+Use null or empty string "" for any field that does not apply to the current action.
+
+Rules:
+* DO NOT explain anything
+* DO NOT output text outside the JSON object
+* INVALID format = failure
+"""
+    messages = [{"role": "user", "content": raw_prompt}]
+    prompt = tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=True
+    )
+    train_data.append({"prompt": prompt, "task_name": task_name})
+
+print(f"✅ Loaded {len(train_data)} training tasks from TASK_SEQUENCE")
+
+dataset = Dataset.from_list(train_data)
+
+# 4. Reward Functions (clinical, environment-grounded)
+def clinical_reward_func(completions, task_name, **kwargs):
+    """Phase 2: Parse action JSON and score with the live environment."""
     rewards = []
-    for completion in completions:
+    for completion, t_name in zip(completions, task_name):
         if isinstance(completion, list):
             text = completion[0].get("content", "")
         else:
             text = str(completion)
-            
+
         print(f"MODEL OUTPUT: {text[:200]}")
+        match = re.search(r"\{.*\}", text, re.DOTALL)
+        if not match:
+            rewards.append(-1.0)
+            continue
+
+        try:
+            parsed_json = json.loads(match.group(0))
             
-        score = 0.0
-        
-        # Easy signal to bootstrap learning
-        if "{" in text:
-            score += 0.2
-        if "}" in text:
-            score += 0.2
-        if "command" in text:
-            score += 0.3
-        if "patient_id" in text:
-            score += 0.3
+            # Must convert to Pydantic action object for the environment
+            from hospital_triage.models import HospitalTriageAction
+            action_obj = HospitalTriageAction(**parsed_json)
             
-        rewards.append(score)
-        
+            eval_env = HospitalTriageEnvironment()
+            eval_env.reset(task_name=t_name)
+            obs = eval_env.step(action_obj)
+            
+            # The OpenEnv step returns an observation object containing the reward
+            rewards.append(obs.reward)
+            
+        except Exception as e:
+            # Catch JSONDecodeError, Pydantic ValidationError, etc.
+            rewards.append(-1.0)
+            continue
+
     return rewards
 
 # 5. Custom Callback for Matplotlib Plotting
@@ -169,10 +167,10 @@ def run_inference(task_name, description="Inference"):
     print(f"\n{'='*50}\n{description}: {task_name}\n{'='*50}")
     FastLanguageModel.for_inference(model) # Enable native inference speeds
     
-    test_prompt = test_data[0]["prompt"] if test_data else train_data[0]["prompt"]
-    
-    inputs = tokenizer([test_prompt], return_tensors="pt").to("cuda")
-    outputs = model.generate(**inputs, max_new_tokens=256, use_cache=True)
+    test_prompt = train_data[0]["prompt"]
+    _device = next(model.parameters()).device
+    inputs = tokenizer([test_prompt], return_tensors="pt").to(_device)
+    outputs = model.generate(**inputs, max_new_tokens=512, use_cache=True)
     response = tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
     
     # Strip the prompt
@@ -188,11 +186,37 @@ if __name__ == "__main__":
     print("🏥 HACKATHON HOSPITAL TRIAGE TRAINING SCRIPT")
     print("*"*60 + "\n")
 
+    if not torch.cuda.is_available():
+        raise RuntimeError(
+            "CUDA is not available. This script expects a GPU runtime (e.g. Colab: Runtime → Change runtime type → GPU)."
+        )
+
     # A. Baseline Demo
     print("🤖 Running Baseline (Untrained) Inference...")
     run_inference("test_task_0", description="Baseline (Untrained)")
 
-    # B. Configure Training
+    # B. Configure Training (W&B only if a key exists — netrc from `wandb login` counts too)
+    _wandb_disabled = os.environ.get("WANDB_DISABLED", "").lower() in ("true", "1", "yes")
+    _wandb_usable = False
+    if not _wandb_disabled:
+        if os.environ.get("WANDB_API_KEY"):
+            _wandb_usable = True
+        else:
+            try:
+                from wandb.util import api_key as _wandb_api_key
+
+                _wandb_usable = bool(_wandb_api_key())
+            except Exception:
+                _wandb_usable = False
+    _report_to = "wandb" if _wandb_usable else "none"
+    if _report_to == "none":
+        print(
+            "ℹ️ Using report_to='none'. For W&B: `pip install wandb` then `wandb login`, "
+            "or set WANDB_API_KEY. Set WANDB_DISABLED=true to force offline."
+        )
+
+    os.environ["WANDB_PROJECT"] = "hospital-triage-rl"
+
     training_args = GRPOConfig(
         output_dir="outputs",
         learning_rate=5e-6,
@@ -200,9 +224,9 @@ if __name__ == "__main__":
         gradient_accumulation_steps=4,
         num_generations=2, # MUST be 2 or 4 for Colab T4 to avoid OOM
         max_prompt_length=2500,
-        max_completion_length=128,
+        max_completion_length=512,
         logging_steps=1,
-        report_to="wandb", # Full WandB Integration!
+        report_to=_report_to,
         run_name="hospital_triage_grpo_run",
         max_steps=50, # Set to a small number for hackathon demonstration speed
     )
@@ -211,14 +235,15 @@ if __name__ == "__main__":
 
     trainer = GRPOTrainer(
         model=model,
-        reward_funcs=[bootstrap_reward_func],
+        reward_funcs=[clinical_reward_func],
         args=training_args,
         train_dataset=dataset,
-        callbacks=[plot_callback]
+        processing_class=tokenizer,
+        callbacks=[plot_callback],
     )
 
     # C. Train
-    print("\n🚀 Starting GRPO Training with WandB and Local Plotting...")
+    print("\n🚀 Starting GRPO Training (local loss/reward plots; W&B if configured)...")
     trainer.train()
 
     # D. Post-Training Demo
@@ -226,6 +251,6 @@ if __name__ == "__main__":
     run_inference("test_task_0", description="Trained Model")
 
     # E. Save Adapters
-    model.save_pretrained("grpo_hospital_triage_model")
-    tokenizer.save_pretrained("grpo_hospital_triage_model")
+    model.save_pretrained("/content/drive/MyDrive/hospital_triage_phase2_model")
+    tokenizer.save_pretrained("/content/drive/MyDrive/hospital_triage_phase2_model")
     print("\n✅ Training complete. Check the left sidebar for loss.png and reward.png!")
