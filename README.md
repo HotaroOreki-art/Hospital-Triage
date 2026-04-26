@@ -1,17 +1,3 @@
----
-title: Hospital Triage and Scheduling System
-emoji: 🏥
-colorFrom: blue
-colorTo: green
-sdk: docker
-pinned: false
-app_port: 7860
-tags:
-  - openenv
-  - reinforcement-learning
-  - healthcare
----
-
 # Hospital Triage and Scheduling System
 
 🚀 **[Play with the Environment on Hugging Face Spaces!](https://huggingface.co/spaces/HotaroOreki-art/hospital_triage)**
