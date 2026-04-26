@@ -14,6 +14,40 @@ tags:
 
 # Hospital Triage and Scheduling System
 
+🚀 **[Play with the Environment on Hugging Face Spaces!](https://huggingface.co/spaces/HotaroOreki-art/hospital_triage)**
+🎥 **[Watch our <2 Min Pitch Presentation Here](https://youtube.com/...)** *(Replace this link with your YouTube video!)*
+
+## 🧠 Reinforcement Learning Pipeline (Qwen 2.5 7B GRPO)
+
+We successfully pivoted from a simple API to a fully autonomous medical agent trained via Reinforcement Learning! 
+
+We built a Two-Phase Curriculum using **Unsloth** and **Hugging Face TRL (GRPO)**:
+1. **Phase 1 (Bootstrap Training)**: The agent started completely blank. We shaped the reward to give partial credit for correct JSON syntax (curly brackets, `command` keys). Within 50 steps, the agent learned to speak the strict Pydantic API language perfectly.
+2. **Phase 2 (Clinical Triage Training)**: We swapped the reward function to the live OpenEnv Engine. The agent generated JSON actions, the engine stepped forward in time, and the agent received a reward between `0.01` and `0.99` based on wait-time metrics, ER capacity preservation, and medical safety.
+
+### Training Results
+Our custom `train_grpo.py` natively supports Weights & Biases and local matplotlib plotting. Here is the evidence from our Colab T4 GRPO run!
+
+#### Reward Progression (Phase 2)
+The agent successfully learned to optimize its actions for the highest safety reward.
+![Reward Progression](reward.png)
+
+#### Training Loss
+![Training Loss](loss.png)
+
+#### Weights & Biases Dashboard
+![WandB Dashboard](wandb.png)
+
+### Try the Training Script Yourself!
+Want to reproduce our RL run? We made it incredibly easy.
+1. Open Google Colab with a T4 GPU.
+2. Paste the contents of `train_grpo.py` into a cell and hit play! 
+The script automatically clones this repo, installs the OpenEnv environment globally, configures `Qwen2.5-7B-Instruct` for 4-bit Unsloth tuning, and seamlessly runs the GRPO loop.
+
+---
+
+## Benchmark Details
+
 This OpenEnv benchmark simulates a realistic outpatient triage desk where an agent must make safe scheduling decisions under staffing and room constraints. The environment is fully deterministic, exposes typed Pydantic action and observation models, and scores agent behavior with dense trajectory rewards kept strictly inside `(0.0, 1.0)`.
 
 ## Real-World Motivation
