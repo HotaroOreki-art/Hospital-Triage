@@ -1,7 +1,7 @@
 # Hospital Triage and Scheduling System
 
 🚀 **[Play with the Environment on Hugging Face Spaces!](https://huggingface.co/spaces/HotaroOreki-art/hospital_triage)**
-🎥 **[Watch our <2 Min Pitch Presentation Here](https://youtube.com/...)** *(Replace this link with your YouTube video!)*
+🎥 **[Watch our 3-Minute Pitch Presentation Here](https://youtu.be/D_NMQ5LuotA)**
 
 ## 1. The Problem: The Chaos of the Front Desk
 Hospital front desks and triage coordinators constantly balance life-or-death urgency, doctor specialty coverage, limited rooms, and schedule disruptions. Patients often experience extreme uncertainty, long waits, and very little visibility into what happens next. 
@@ -59,7 +59,7 @@ After training on the Season 1 scenarios, we tested the agent on the 20 unseen S
 
 ## Try the Training Script Yourself!
 A reviewer should be able to reproduce our RL run in 3 minutes! We made it incredibly easy.
-1. Open Google Colab with a T4 GPU.
+1. **[Open our Google Colab Notebook Here](https://colab.research.google.com/drive/1bEhx5rLlE7Zri9X6B0erc_HXFy-txiDm?usp=sharing)** or open a blank Colab notebook with a T4 GPU.
 2. Paste the contents of `train_grpo.py` into a cell and hit play! 
 The script automatically clones this repo, installs the OpenEnv environment globally, configures `Qwen2.5-7B-Instruct` for 4-bit Unsloth tuning, mounts your Google Drive, and seamlessly runs the GRPO loop.
 
